@@ -26,6 +26,11 @@ import FoodImage from '../images/food-image.jpg';
 import { COLORS } from '../style_constants';
 import { REQUEST_STATE } from '../constants';
 
+
+const submitOrder = () => {
+  console.log('登録ボタンが押された！')
+}
+
 const HeaderWrapper = styled.div`
   display: flex;
   justify-content: space-between;
@@ -124,11 +129,25 @@ export const Foods = ({
       {
         state.isOpenOrderDialog &&
           <FoodOrderDialog
-            food={state.selectedFood}
             isOpen={state.isOpenOrderDialog}
+            food={state.selectedFood}
+            countNumber={state.selectedFoodCount}
+            onClickCountUp={() => setState({
+              ...state,
+              selectedFoodCount: state.selectedFoodCount + 1,
+            })}
+            onClickCountDown={() => setState({
+              ...state,
+              selectedFoodCount: state.selectedFoodCount - 1,
+            })}
+            // 先ほど作った関数を渡します
+            onClickOrder={() => submitOrder()}
+            // モーダルを閉じる時はすべてのstateを初期化する
             onClose={() => setState({
               ...state,
               isOpenOrderDialog: false,
+              selectedFood: null,
+              selectedFoodCount: 1,
             })}
           />
       }
